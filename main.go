@@ -3,13 +3,13 @@ package main
 import (
 	"bufio"
 	"context"
-	"flag"
 	"fmt"
 	"log"
 	"os"
 	"strings"
 
 	"github.com/google/generative-ai-go/genai"
+	"github.com/joho/godotenv"
 	"google.golang.org/api/option"
 )
 
@@ -21,16 +21,15 @@ func readLine() (string, error) {
 }
 
 func main() {
-	// init environment variable
-	API_KEY := flag.String("api-key", os.Getenv("API_KEY"), "Gemini AI api key required")
-	flag.Parse()
-	if *API_KEY == "" {
-		log.Fatal("api key required")
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
 	}
 
 	// init genai client
 	ctx := context.Background()
-	client, err := genai.NewClient(ctx, option.WithAPIKey(*API_KEY))
+	client, err := genai.NewClient(ctx, option.WithAPIKey(os.Getenv("API_KEY")))
 	if err != nil {
 		log.Fatal(err)
 	}
