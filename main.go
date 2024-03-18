@@ -13,8 +13,8 @@ import (
 	"google.golang.org/api/option"
 )
 
-// readLine users input prompt
-func readLine() (string, error) {
+// readPrompt users input prompt
+func readPrompt() (string, error) {
 	reader := bufio.NewReader(os.Stdin)
 	input, err := reader.ReadString('\n')
 	return strings.TrimSpace(input), err
@@ -43,7 +43,7 @@ func main() {
 	// chat
 	for {
 		fmt.Println("User prompt:")
-		input, err := readLine()
+		input, err := readPrompt()
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -54,7 +54,7 @@ func main() {
 		fmt.Printf("*****************\nGemini Response: %v \n*****************\n", resp.Candidates[0].Content.Parts[0])
 
 		fmt.Println("Wish to continue?  y/n and press enter")
-		input, err = readLine()
+		input, err = readPrompt()
 		if err != nil {
 			log.Fatal(err)
 		}
